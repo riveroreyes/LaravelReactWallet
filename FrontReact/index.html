@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Test Api</title>
+</head>
+
+<body>
+    <form>
+        <div>
+            <label for="email">Correo electronico:
+                <input type="email" name="email" id="email">
+            </label>
+            <label for="password">Contrasenha:
+                <input type="password" name="password" id="password">
+            </label>
+            <button type="submit" id="btnEnviar">Conectar</button>
+        </div>
+    </form>
+</body>
+<script>
+    (function () {
+        'use strict';
+        const clientId = 1;
+        const clientSecrect = 's372QpKTEsVM7U08vR0krHJI5P7nrlds8lQj6WZ9';
+        const grantType = 'password';
+
+        let btn = document.getElementById('btnEnviar');
+
+        btn.addEventListener('click', event => {
+            event.preventDefault();
+
+            fetch('http://127.0.0.1:8000/oauth/token', {
+                method: 'POST',
+                body: JSON.stringify({
+                    client_id: clientId,
+                    client_secret: clientSecrect,
+                    grant_type: grantType,
+                    username: document.getElementById('email').value,
+                    password: document.getElementById('password').value
+                }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+                .then(response => {
+                    console.log(response)
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    localStorage.setItem('token', data.access_token);
+                })
+
+        });
+    })();
+
+
+
+</script>
+
+</html>

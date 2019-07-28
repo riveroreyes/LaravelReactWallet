@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row" id="cuerpo">
+
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+<script>
+
+    (function () {
+        'use strict';
+
+        if (localStorage.getItem('token')) {
+            fetch('http://dummy.restapiexample.com/api/v1/employees', {
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer' + localStorage.getItem('token') }
+            })
+                .then(response => {
+                    return response.json();
+                }).then(data => {
+                    console.log(data);
+                    const lista = document.getElementById('cuerpo');
+                    let str = '';
+                    data.forEach(function (valor) {
+                        console.log(valor);
+                        str += '<div class="col-2"> \
+                        <div class="card" > \
+                            <img src="https://mbevivino.files.wordpress.com/2011/08/silhouette_default.jpg?w=150&h=94" class="img-thumbnail" alt="..."> \
+                            <div class="card-body"> \
+                                <h5 class="card-title"><small>Nombre: </small><br>'+valor.employee_name+'</h5> \
+                                <p class="card-text">Salario: '+valor.employee_salary+'<br/>Edad: '+valor.employee_age+'</p> \
+                                <a href="#" class="btn btn-primary">Saber mas</a> \
+                            </div> \
+                        </div> \
+                        </div>';
+                    });
+                    lista.innerHTML = str;
+                })
+        }
+    })();
+
+
+</script>
+
+</html>
